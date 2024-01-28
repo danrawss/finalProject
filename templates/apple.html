@@ -1,0 +1,276 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Apple 
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1 class="my-4">Apple Products</h1>
+        <h2>Phones</h2>
+        <div class="product-grid">
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/i/p/2bd48d28d1c32adea0e55139a4e6434a/iphone_15_pro_black_titanium_pdp_image_position_1_wwen_058de114.jpg" alt="iPhone 15 Pro">
+                    <h3>iPhone 15 Pro</h3>
+                    <p>$999</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 15 Pro">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/a/p/2bd48d28d1c32adea0e55139a4e6434a/apple_iphone_15_blue_1_38e3a2b7.jpg" alt="iPhone 15">
+                    <h3>iPhone 15</h3>
+                    <p>$799</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 15">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/i/p/2bd48d28d1c32adea0e55139a4e6434a/iphone_14_pro_silver-1_56a46342.jpg" alt="iPhone 14 Pro">
+                    <h3>iPhone 14 Pro</h3>
+                    <p>$799</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 14 Pro">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/i/p/2bd48d28d1c32adea0e55139a4e6434a/iphone_14_purple-1_3df48088.jpg" alt="iPhone 14">
+                    <h3>iPhone 14</h3>
+                    <p>$699</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 14">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://www.gigantti.fi/image/dv_web_D180001002838548/361939/iphone-13-pro-5g-alypuhelin-128-gb-kulta--pdp_zoom-3000--pdp_main-540.jpg" alt="iPhone 13 Pro">
+                    <h3>iPhone 13 Pro</h3>
+                    <p>$699</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 13 Pro">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/e/2bd48d28d1c32adea0e55139a4e6434a/Telefon_APPLE_iPhone_13_5G_128GB_Blue_4_.jpg" alt="iPhone 13">
+                    <h3>iPhone 13</h3>
+                    <p>$599</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone 13">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/e/2bd48d28d1c32adea0e55139a4e6434a/Telefon_APPLE_iPhone_SE_5G_Midnight_1_.jpg" alt="iPhone SE 2">
+                    <h3>iPhone SE 2</h3>
+                    <p>$450</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPhone SE 2">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+        </div>
+        <h2>Headphones</h2>
+        <div class="product-grid">
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/a/2bd48d28d1c32adea0e55139a4e6434a/Casti-APPLE-AirPods-Max_-Bluetooth_-On-Ear_-Microfon_-Noise-Cancelling_-Space-Gray_2.jpg" alt="AirPods Max">
+                    <h3>AirPods Max</h3>
+                    <p>$549</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="AirPods Max">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/A/2bd48d28d1c32adea0e55139a4e6434a/CASAIRPODSPRO_ad06f91e.jpg" alt="AirPods Pro">
+                    <h3>AirPods Pro</h3>
+                    <p>$249</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="AirPods Pro">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/a/2bd48d28d1c32adea0e55139a4e6434a/Casti_APPLE_AirPods_3_True_Wireless_Bluetooth_In-Ear_Microfon_Carcasa_Incarcare_Wireless_alb_1_.jpg" alt="AirPods 3">
+                    <h3>AirPods 3</h3>
+                    <p>$169</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="AirPods 3">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/A/2bd48d28d1c32adea0e55139a4e6434a/CASAIRPODS_313d0f7a.jpg" alt="AirPods 2">
+                    <h3>AirPods 2</h3>
+                    <p>$129</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="AirPods 2">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+        </div>
+        <h2>Computers</h2>
+        <div class="product-grid">
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/M/a/2bd48d28d1c32adea0e55139a4e6434a/MacBook_Pro_16-in_Silver_1.jpg" alt="MacBook Pro 16">
+                    <h3>MacBook Pro 16</h3>
+                    <p>$2399</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="MacBook Pro 16">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/m/a/2bd48d28d1c32adea0e55139a4e6434a/macbook_pro_14_in_m3_pro_max_silver_pdp_image_position_1_wwen_07f2061e.jpg" alt="MacBook Pro 14">
+                    <h3>MacBook Pro 14</h3>
+                    <p>$1999</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="MacBook Pro 14">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/s/i/2bd48d28d1c32adea0e55139a4e6434a/silver_1_e22b3db5.jpg" alt="MacBook Air 15">
+                    <h3>MacBook Air 15</h3>
+                    <p>$1299</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="MacBook Air 15">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/M/a/2bd48d28d1c32adea0e55139a4e6434a/MacBook_Air_M2_Midnight_1.jpg" alt="MacBook Air 13">
+                    <h3>MacBook Air 13</h3>
+                    <p>$1099</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="MacBook Air 13">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/M/a/2bd48d28d1c32adea0e55139a4e6434a/MacBook_Pro_13_in_Silver_1.jpg" alt="MacBook Pro 13">
+                    <h3>MacBook Pro 13</h3>
+                    <p>$1299</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="MacBook Pro 13">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+        </div>
+        <h2>Tablets</h2>
+        <div class="product-grid">
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/a/2bd48d28d1c32adea0e55139a4e6434a/tableta_apple_ipad_pro_12_9_6rd_gen_2022_wi_fi_silver_01_2286ed27.jpg" alt="iPad Pro">
+                    <h3>iPad Pro</h3>
+                    <p>$799</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPad Pro">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/a/2bd48d28d1c32adea0e55139a4e6434a/Tableta_APPLE_iPad_Air_5_Blue_3_.jpg" alt="iPad Air">
+                    <h3>iPad Air</h3>
+                    <p>$599</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPad Air">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/a/2bd48d28d1c32adea0e55139a4e6434a/tableta_apple_ipad_10_wi_fi_silver_01_2a075fed.jpg" alt="iPad 10">
+                    <h3>iPad 10</h3>
+                    <p>$449</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPad 10">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/a/2bd48d28d1c32adea0e55139a4e6434a/Tableta_APPLE_iPad_9_2021_10.2_Wi-Fi_4G_Space_Grey.jpg" alt="iPad 9">
+                    <h3>iPad 9</h3>
+                    <p>$329</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPad 9">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/a/2bd48d28d1c32adea0e55139a4e6434a/Tableta_APPLE_iPad_Mini_6_8.3_Wi-Fi_Purple_1_.jpg" alt="iPad Mini">
+                    <h3>iPad Mini</h3>
+                    <p>$499</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="iPad Mini">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+        </div>
+        <h2>Smartwatches</h2>
+        <div class="product-grid">
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/a/p/2bd48d28d1c32adea0e55139a4e6434a/apple_watch_series_9_gps_41mm_starlight_aluminum_starlight_sport_loop_pdp_image_position_1_wwen_c5fdcc50.jpg" alt="Apple Watch Series 9">
+                    <h3>Apple Watch Series 9</h3>
+                    <p>$499</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="Apple Watch Series 9">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/a/p/2bd48d28d1c32adea0e55139a4e6434a/apple_watch_ultra_2_lte_49mm_titanium_blue_ocean_band_1_a0a2dba1.jpg" alt="Apple Watch Ultra 2">
+                    <h3>Apple Watch Ultra 2</h3>
+                    <p>$799</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="Apple Watch Ultra 2">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/b/r/2bd48d28d1c32adea0e55139a4e6434a/brtmqe23zm-1_cd75fa11.jpg" alt="Apple Watch SE">
+                    <h3>Apple Watch SE</h3>
+                    <p>$249</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="Apple Watch SE">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+            <form method="POST" action="/apple">
+                <div class="product">
+                    <img src="https://i3.stat01.com/2/7917/179169029/075a3e/apple-watch-herms-series-8-41mm-silver-stainless-steel-case-with-single-tour-gold.jpg" alt="Apple Watch Hermes">
+                    <h3>Apple Watch Hermes</h3>
+                    <p>$1249</p>
+                    <input type="number" name="quantity" value="1">
+                    <input type="hidden" name="product_name" value="Apple Watch Hermes">
+                    <input type="submit" value="Add to Cart">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

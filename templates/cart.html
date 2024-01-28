@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shopping Cart
+{% endblock %}
+
+{% block main %}
+    <h1>Shopping Cart</h1>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item["product_name"] }}</td>
+            <td>${{ item["product_price"] }}</td>
+            <td>{{ item["quantity"] }}</td>
+            <td>{{ item["product_price"] * item["quantity"]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>Total: ${{ total_price }}</p>
+    <a href="/checkout">Checkout</a>
+{% endblock %}

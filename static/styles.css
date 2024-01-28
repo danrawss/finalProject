@@ -1,0 +1,68 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue
+{
+    color: #537fbe;
+}
+nav .navbar-brand .red
+{
+    color: #ea433b;
+}
+nav .navbar-brand .yellow
+{
+    color: #f5b82e;
+}
+nav .navbar-brand .green
+{
+    color: #2e944b;
+}
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+th {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+td {
+    padding: 10px;
+}
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust the gap to control spacing between products */
+}
+.product {
+    flex: 1; /* Each product takes equal space in the row */
+
+    /* Optional styling for each product */
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+    max-width: 200px; 
+    height: auto;
+}
+.product img{
+    max-width: 100%;
+}
+.product input[type="submit"]{
+    cursor: pointer;
+}
+.product input{
+    width: 100px;
+    text-align: center;
+}
