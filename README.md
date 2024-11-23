@@ -1,7 +1,5 @@
 # TECHTROVE
 
-#### Video Demo: [https://youtu.be/tel2GqNyKWk](https://youtu.be/tel2GqNyKWk)
-
 ### Description
 TECHTROVE is an e-commerce platform developed with robust data management, user authentication, and a dynamic shopping experience. The front-end is built with HTML and CSS for a responsive interface, while the back-end uses Flask and SQLite for data storage.
 
