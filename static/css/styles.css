@@ -1,0 +1,222 @@
+:root {
+    --blue: #537fbe;
+    --red: #ea433b;
+    --yellow: #f5b82e;
+    --green: #2e944b;
+    --dark-bg: #333;
+    --light-bg: #f2f2f2;
+    --white: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --primary-font: 'Poppins', sans-serif;
+    --secondary-font: 'Roboto', sans-serif;
+    --transition-speed: 0.3s;
+}
+
+/* General Styling */
+body {
+    font-family: var(--primary-font);
+    line-height: 1.8;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--primary-font);
+    font-weight: 600;
+    color: var(--dark-bg);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Paragraph and Anchor Styles */
+p {
+    font-family: var(--secondary-font);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+a {
+    color: var(--blue);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+a:hover {
+    color: var(--green);
+}
+
+/* Navbar Styling */
+nav {
+    padding: 15px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    background-color: var(--dark-bg);
+}
+nav .navbar-brand {
+    font-size: xx-large;
+    color: var(--white);
+    transition: color var(--transition-speed);
+}
+nav .navbar-brand:hover {
+    color: var(--yellow);
+}
+nav .navbar-brand .blue {
+    color: var(--blue);
+}
+nav .navbar-brand .red {
+    color: var(--red);
+}
+nav .navbar-brand .yellow {
+    color: var(--yellow);
+}
+nav .navbar-brand .green {
+    color: var(--green);
+}
+
+/* Table Styling */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: var(--white);
+    box-shadow: 0 0 15px var(--shadow-color);
+    overflow: hidden;
+    border-radius: 5px;
+}
+th {
+    background-color: var(--dark-bg);
+    color: var(--white);
+    text-align: left;
+    padding: 15px;
+}
+tr:nth-child(even) {
+    background-color: var(--light-bg);
+}
+td {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Product Grid Styling */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 15px;
+}
+
+/* Product Card Styling */
+.product {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--white);
+    box-shadow: 0 0 10px var(--shadow-color);
+    padding: 10px;
+    text-align: center;
+    min-height: 350px; /* Ensure all products have the same height */
+    max-width: 300px;  /* Optional: set max width to control card size */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image Styling */
+.product-image {
+    margin-bottom: 10px;
+    height: 180px; /* Consistent height for images */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-bottom: 1px solid #ddd; 
+}
+
+/* Product Details */
+.product-details {
+    margin-bottom: 10px;
+}
+
+.product-details h3 {
+    font-size: 1.1em;
+    min-height: 45px; /* Ensures consistent title area */
+}
+
+/* Product Actions */
+.product-actions {
+    display: flex;
+    flex-direction: column; /* Stack inputs and buttons vertically */
+    gap: 10px;
+}
+
+.product input[type="number"] {
+    width: 50px; /* Consistent width for quantity input */
+    text-align: center;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.product input[type="submit"] {
+    cursor: pointer;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.product input[type="submit"]:hover {
+    background-color: var(--green);
+}
+
+
+/* Responsive Design for Smartphones */
+@media (max-width: 768px) {
+    nav .navbar-brand {
+        font-size: large;
+    }
+    table {
+        width: 95%;
+    }
+    th, td {
+        padding: 10px;
+    }
+    .product {
+        padding: 10px;
+        min-height: auto;
+    }
+    .product img {
+        height: 100px;
+    }
+    .product-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .product input[type="number"] {
+        width: 50px;
+    }
+}

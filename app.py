@@ -1,5 +1,4 @@
 import os
-
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
@@ -16,7 +15,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:///database.db")
 
 @app.after_request
 def after_request(response):
@@ -30,8 +29,6 @@ def after_request(response):
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
-    # Forget any user_id
     session.clear()
 
     # User reached route via POST (as by submitting a form via POST)
@@ -66,11 +63,7 @@ def login():
 @app.route("/logout")
 def logout():
     """Log user out"""
-
-    # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")
 
 
@@ -99,8 +92,6 @@ def register():
 @app.route("/")
 @login_required
 def index():
-    user_id = session["user_id"]
-
     return render_template("index.html")
 
 
@@ -217,25 +208,46 @@ def view_xiaomi():
     return render_template("xiaomi.html")
     
 
+# Helper function to add or update items in the cart
+def add_or_update_cart(user_id, product_name, product_price, product_quantity):
+    """Helper function to add or update items in the cart"""
+    # Check if the item is already in the cart
+    existing_item = db.execute(
+        "SELECT * FROM shopping_cart WHERE user_id = ? AND product_name = ?",
+        user_id, product_name
+    )
+
+    if existing_item:
+        # Update the quantity if the item already exists
+        db.execute(
+            "UPDATE shopping_cart SET quantity = quantity + ? WHERE user_id = ? AND product_name = ?",
+            product_quantity, user_id, product_name
+        )
+    else:
+        # Insert a new item into the cart
+        db.execute(
+            "INSERT INTO shopping_cart (user_id, product_name, product_price, quantity) VALUES (?, ?, ?, ?)",
+            user_id, product_name, product_price, product_quantity
+        )
+
+    db.execute("INSERT INTO purchases(user_id, product_name, product_price, quantity, date) VALUES (?, ?, ?, ?, ?)",
+        user_id, product_name, product_price, product_quantity, get_time()) 
+
+
 @app.route("/cart")
 def view_cart():
     user_id = session["user_id"]
     cart_items = db.execute(
-        "SELECT product_name, product_price, quantity FROM shopping_cart WHERE user_id = ?",
-        user_id
+        "SELECT product_name, product_price, quantity FROM shopping_cart WHERE user_id = ?", user_id
     )
     
-    total_price = 0
-    for item in cart_items:
-        price = float(item["product_price"])
-        quantity = int(item["quantity"])
-        total_price += price * quantity
+    total_price = sum(float(item["product_price"]) * int(item["quantity"]) for item in cart_items)
 
     return render_template("cart.html", cart_items=cart_items, total_price=total_price)
+
 
 @app.route("/checkout")
 def view_checkout():
     user_id = session["user_id"]
-
     db.execute("DELETE FROM shopping_cart WHERE user_id = ?", user_id)
     return render_template("checkout.html")

@@ -7,268 +7,407 @@
 {% block main %}
     <div class="container">
         <h1 class="my-4">Samsung Products</h1>
+
         <h2>Phones</h2>
         <div class="product-grid">
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/e/2bd48d28d1c32adea0e55139a4e6434a/telefon_samsung_galaxy_z_flip5_5g_graphite_9__1aa5d06d.jpg" alt="Galaxy Z Flip5">
-                    <h3>Galaxy Z Flip5</h3>
-                    <p>$999</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy Z Flip5">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_z_flip5.avif" alt="Galaxy Z Flip5">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy Z Flip5</h3>
+                        <p class="product-price">$999</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy Z Flip5">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/e/2bd48d28d1c32adea0e55139a4e6434a/telefon_samsung_galaxy_z_fold5_5g_cream_2__708b6215.jpg" alt="Galaxy Z Fold5">
-                    <h3>Galaxy Z Fold5</h3>
-                    <p>$1919</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy Z Fold5">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </form>     
-            <form method="POST" action="/samsung">
-                <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/T/e/2bd48d28d1c32adea0e55139a4e6434a/Telefon_SAMSUNG_Galaxy_S22_5G_256GB_8GB_RAM_Dual_SIM_Green_6_.jpg" alt="Galaxy S22">
-                    <h3>Galaxy S22</h3>
-                    <p>$619</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy S22">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_z_fold5.avif" alt="Galaxy Z Fold5">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy Z Fold5</h3>
+                        <p class="product-price">$1919</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy Z Fold5">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/s/m/2bd48d28d1c32adea0e55139a4e6434a/smta541gr_5__b5e90273.jpg" alt="Galaxy A54">
-                    <h3>Galaxy A54</h3>
-                    <p>$449</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy A54">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_s22.avif" alt="Galaxy S22">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy S22</h3>
+                        <p class="product-price">$619</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy S22">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/e/2bd48d28d1c32adea0e55139a4e6434a/telefon_samsung_galaxy_s23_ultra_green_01_971ddec7.jpg" alt="Galaxy S23 Ultra">
-                    <h3>Galaxy S23 Ultra</h3>
-                    <p>$1619</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy S23 Ultra">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_a54.avif" alt="Galaxy A54">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy A54</h3>
+                        <p class="product-price">$449</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy A54">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/e/2bd48d28d1c32adea0e55139a4e6434a/telefon_samsung_galaxy_s23_green_01_56193a18.png" alt="Galaxy S23">
-                    <h3>Galaxy S23</h3>
-                    <p>$859</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy S23">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_s23_ultra.avif" alt="Galaxy S23 Ultra">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy S23 Ultra</h3>
+                        <p class="product-price">$1619</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy S23 Ultra">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/e/2bd48d28d1c32adea0e55139a4e6434a/telefon_samsung_galaxy_s23_plus_lavender_0_a9760d9d.jpg" alt="Galaxy S23+">
-                    <h3>Galaxy S23+</h3>
-                    <p>$999</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Galaxy S23+">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_s23.avif" alt="Galaxy S23">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy S23</h3>
+                        <p class="product-price">$859</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy S23">
+                        <input type="submit" value="Add to Cart">
+                    </div>
+                </div>
+            </form>
+            <form method="POST" action="/samsung">
+                <div class="product">
+                    <div class="product-image">
+                        <img src="static/images/samsung/phones/samsung_galaxy_s23_plus.avif" alt="Galaxy S23+">
+                    </div>
+                    <div class="product-details">
+                        <h3>Galaxy S23+</h3>
+                        <p class="product-price">$999</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Galaxy S23+">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
         </div>
+
         <h2>Headphones</h2>
         <div class="product-grid">
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/a/2bd48d28d1c32adea0e55139a4e6434a/Casti-SAMSUNG-Galaxy-Buds-Plus-Pro_-True-Wireless-Bluetooth_-In-Ear_-Microfon_-Noise-Cancelling_-negru_3.jpg" alt="Samsung Galaxy Buds Pro">
-                    <h3>Samsung Galaxy Buds Pro</h3>
-                    <p>$199</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Buds Pro">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/headphones/samsung_galaxy_buds_pro.avif" alt="Samsung Galaxy Buds Pro">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Buds Pro</h3>
+                        <p class="product-price">$199</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Buds Pro">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/A/2bd48d28d1c32adea0e55139a4e6434a/CASBUDSLIVEWH_5.jpg" alt="Samsung Galaxy Buds Live">
-                    <h3>Samsung Galaxy Buds Live</h3>
-                    <p>$169</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Buds Live">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/headphones/samsung_galaxy_buds_live.avif" alt="Samsung Galaxy Buds Live">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Buds Live</h3>
+                        <p class="product-price">$169</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Buds Live">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/c/a/16fa6a9aef7ffd6209d5fd9338ffa0b1/casti_samsung_galaxy_buds_fe_graphite_2_f08cd55d.jpg" alt="Samsung Galaxy Buds+">
-                    <h3>Samsung Galaxy Buds+</h3>
-                    <p>$129</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Buds+">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/headphones/samsung_galaxy_buds_plus.avif" alt="Samsung Galaxy Buds+">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Buds+</h3>
+                        <p class="product-price">$129</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Buds+">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/C/A/2bd48d28d1c32adea0e55139a4e6434a/CASR170NZKAR_5_5621acf1.jpg" alt="Samsung Galaxy Buds">
-                    <h3>Samsung Galaxy Buds</h3>
-                    <p>$99</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Buds">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/headphones/samsung_galaxy_buds.avif" alt="Samsung Galaxy Buds">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Buds</h3>
+                        <p class="product-price">$99</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Buds">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
         </div>
+
         <h2>Computers</h2>
         <div class="product-grid">
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://image-us.samsung.com/SamsungUS/home/computing/galaxy-book-pro-360/3605g/GalaxyBookPro360_Device.jpg?$product-details-jpg$" alt="Samsung Galaxy Book Pro 360">
-                    <h3>Samsung Galaxy Book Pro 360</h3>
-                    <p>$1299</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Book Pro 360">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/computers/samsung_galaxy_book_pro_360.webp" alt="Samsung Galaxy Book Pro 360">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Book Pro 360</h3>
+                        <p class="product-price">$1299</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Book Pro 360">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://images.samsung.com/is/image/samsung/ca-feature-thin-as-a-smartphone--powerful-as-a-pc-485058425?$FB_TYPE_A_MO_JPG$" alt="Samsung Galaxy Book Pro">
-                    <h3>Samsung Galaxy Book Pro</h3>
-                    <p>$1099</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Book Pro">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/computers/samsung_galaxy_book_pro.avif" alt="Samsung Galaxy Book Pro">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Book Pro</h3>
+                        <p class="product-price">$1099</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Book Pro">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://image-us.samsung.com/SamsungUS/home/computing/galaxy-books/052820/NT930QCGI_001_Front-Open_QLED_Blue-Gallery-1600x1200.jpg?$product-details-jpg$" alt="Samsung Galaxy Book Flex">
-                    <h3>Samsung Galaxy Book Flex</h3>
-                    <p>$999</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Book Flex">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/computers/samsung_notebook_9_pro.jpg" alt="Samsung Notebook 9 Pro">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Notebook 9 Pro</h3>
+                        <p class="product-price">$899</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Notebook 9 Pro">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://img.us.news.samsung.com/us/wp-content/uploads/2019/03/14102602/Notebook-9-Pro-KV-3.jpg" alt="Samsung Notebook 9 Pro">
-                    <h3>Samsung Notebook 9 Pro</h3>
-                    <p>$899</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Notebook 9 Pro">
-                    <input type="submit" value="Add to Cart">
-                </div>
-            </form>
-            <form method="POST" action="/samsung">
-                <div class="product">
-                    <img src="https://image-us.samsung.com/SamsungUS/home/computing/windows-laptops/pdp/np930mbe-k01us/930MBE_025_Dynamic6_With-Active-Pen_Silver.jpg?$product-details-jpg$" alt="Samsung Notebook 9">
-                    <h3>Samsung Notebook 9</h3>
-                    <p>$749</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Notebook 9">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/computers/samsung_notebook_9.webp" alt="Samsung Notebook 9">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Notebook 9</h3>
+                        <p class="product-price">$749</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Notebook 9">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
         </div>
+
         <h2>Tablets</h2>
         <div class="product-grid">
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/H/u/2bd48d28d1c32adea0e55139a4e6434a/Husa_Book_Cover_pentru_SAMSUNG_Galaxy_Tab_S7_Galaxy_Tab_S7_FE_Galaxy_Tab_S8_EF-BT730PBEGEU_Black_11_.jpg" alt="Samsung Galaxy Tab S7">
-                    <h3>Samsung Galaxy Tab S7</h3>
-                    <p>$649</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Tab S7">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/tablets/samsung_galaxy_tab_s7.avif" alt="Samsung Galaxy Tab S7">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Tab S7</h3>
+                        <p class="product-price">$649</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Tab S7">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://s13emagst.akamaized.net/products/24652/24651139/images/res_4b85cd030cafeab476ee6f09ba602e56.jpg?width=450&height=450&hash=FADE09C3AD0F0A867AC8CEBEDD6A69C1" alt="Samsung Galaxy Tab S6 Lite">
-                    <h3>Samsung Galaxy Tab S6 Lite</h3>
-                    <p>$349</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Tab S6 Lite">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/tablets/samsung_galaxy_tab_s6_lite.webp" alt="Samsung Galaxy Tab S6 Lite">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Tab S6 Lite</h3>
+                        <p class="product-price">$349</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Tab S6 Lite">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/t/a/2bd48d28d1c32adea0e55139a4e6434a/tableta_samsung_galaxy_tab_a7_wi_fi_gray_01_e2b5e2e8.jpg" alt="Samsung Galaxy Tab A7">
-                    <h3>Samsung Galaxy Tab A7</h3>
-                    <p>$229</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Tab A7">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/tablets/samsung_galaxy_tab_a7.avif" alt="Samsung Galaxy Tab A7">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Tab A7</h3>
+                        <p class="product-price">$229</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Tab A7">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://s13emagst.akamaized.net/products/33914/33913685/images/res_a54c170cc090ff470263aeabbb515d95.jpg?width=450&height=450&hash=4A422EC184CE481514C8CD39066926BF" alt="Samsung Galaxy Tab Active3">
-                    <h3>Samsung Galaxy Tab Active3</h3>
-                    <p>$599</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Tab Active3">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/tablets/samsung_galaxy_tab_active3.webp" alt="Samsung Galaxy Tab Active3">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Tab Active3</h3>
+                        <p class="product-price">$599</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Tab Active3">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://s13emagst.akamaized.net/products/39848/39847642/images/res_a050920960878a1058aa43642672b96a.jpg?width=450&height=450&hash=2183F6E5DF74CD99F32E7F1555826145" alt="Samsung Galaxy Tab Active Pro">
-                    <h3>Samsung Galaxy Tab Active Pro</h3>
-                    <p>$799</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Tab Active Pro">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/tablets/samsung_galaxy_tab_active_pro.png" alt="Samsung Galaxy Tab Active Pro">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Tab Active Pro</h3>
+                        <p class="product-price">$799</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Tab Active Pro">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
         </div>
+
         <h2>Smartwatches</h2>
         <div class="product-grid">
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://s13emagst.akamaized.net/products/39335/39334354/images/res_e2dd0cee44a4fccaeec6471db062b92b.jpg" alt="Samsung Galaxy Watch 4">
-                    <h3>Samsung Galaxy Watch 4</h3>
-                    <p>$249</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Watch 4">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/smartwatches/samsung_galaxy_watch_4.webp" alt="Samsung Galaxy Watch 4">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Watch 4</h3>
+                        <p class="product-price">$249</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Watch 4">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/S/m/2bd48d28d1c32adea0e55139a4e6434a/Smartwatch_SAMSUNG_Galaxy_Watch4_Classic_46mm_AndroidiOS_Black_4_.jpg" alt="Samsung Galaxy Watch 4 Classic">
-                    <h3>Samsung Galaxy Watch 4 Classic</h3>
-                    <p>$299</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Watch 4 Classic">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/smartwatches/samsung_galaxy_watch_ultra.avif" alt="Samsung Galaxy Watch 4 Classic">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Watch 4 Classic</h3>
+                        <p class="product-price">$299</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Watch 4 Classic">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://s13emagst.akamaized.net/products/31640/31639990/images/res_5872f0449fdced43501bb8e826439989.jpg?width=300&height=300&hash=A8BD1988618B2A4CABEE9B2707309294" alt="Samsung Galaxy Watch 3">
-                    <h3>Samsung Galaxy Watch 3</h3>
-                    <p>$199</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Watch 3">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/smartwatches/samsung_galaxy_watch_3.webp" alt="Samsung Galaxy Watch 3">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Watch 3</h3>
+                        <p class="product-price">$199</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Watch 3">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
             <form method="POST" action="/samsung">
                 <div class="product">
-                    <img src="https://lcdn.altex.ro/resize/media/catalog/product/S/M/2bd48d28d1c32adea0e55139a4e6434a/SMWSACTIVE244CS_4_34351738.jpg" alt="Samsung Galaxy Watch Active 2">
-                    <h3>Samsung Galaxy Watch Active 2</h3>
-                    <p>$149</p>
-                    <input type="number" name="quantity" value="1">
-                    <input type="hidden" name="product_name" value="Samsung Galaxy Watch Active 2">
-                    <input type="submit" value="Add to Cart">
+                    <div class="product-image">
+                        <img src="static/images/samsung/smartwatches/samsung_galaxy_watch_active2.avif" alt="Samsung Galaxy Watch Active 2">
+                    </div>
+                    <div class="product-details">
+                        <h3>Samsung Galaxy Watch Active 2</h3>
+                        <p class="product-price">$149</p>
+                    </div>
+                    <div class="product-actions">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <input type="hidden" name="product_name" value="Samsung Galaxy Watch Active 2">
+                        <input type="submit" value="Add to Cart">
+                    </div>
                 </div>
             </form>
         </div>
