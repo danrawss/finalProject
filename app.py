@@ -1,6 +1,6 @@
 import os
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -89,128 +89,38 @@ def register():
         return render_template("register.html")
 
 
+def get_cart_count(user_id):
+    cart_items = db.execute("SELECT SUM(quantity) AS total_items FROM shopping_cart WHERE user_id = ?", user_id)
+    return cart_items[0]["total_items"] if cart_items[0]["total_items"] else 0
+
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+    user_id = session["user_id"]
+    cart_count = get_cart_count(user_id)
+    return render_template("index.html", cart_count=cart_count)
 
 
-@app.route("/apple", methods=["GET", "POST"])
+@app.route("/cart/add", methods=["POST"])
 @login_required
-def view_apple():
-    if request.method == "POST":
-        user_id = session["user_id"]
+def add_to_cart():
+    """Add an item to the shopping cart (AJAX request)"""
+    user_id = session["user_id"]
+    data = request.get_json()  # Get the JSON data from the request
 
-        product_name = request.form.get("product_name")
-        product_price = db.execute("SELECT item_price FROM products WHERE item_name = ?", product_name)
-        product_price = float(product_price[0]["item_price"])
-        product_quantity = int(request.form.get("quantity"))
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
 
-        # Check if the item is already in the cart
-        existing_item = db.execute(
-            "SELECT * FROM shopping_cart WHERE user_id = ? AND product_name = ?",
-            user_id, product_name
-        )
+    product_name = data.get("product_name")
+    product_quantity = data.get("quantity", 1)
 
-        if existing_item:
-            # Update the quantity if the item already exists
-            db.execute(
-                "UPDATE shopping_cart SET quantity = quantity + ? WHERE user_id = ? AND product_name = ?",
-                product_quantity, user_id, product_name
-            )
-        else:
-            # Insert a new item into the cart
-            db.execute(
-                "INSERT INTO shopping_cart (user_id, product_name, product_price, quantity) VALUES (?, ?, ?, ?)",
-                user_id, product_name, product_price, product_quantity
-            )
-        db.execute("INSERT INTO purchases(user_id, product_name, product_price, quantity, date) VALUES (?, ?, ?, ?, ?)",
-                user_id, product_name, product_price, product_quantity, get_time()) 
+    # Get product price from the database
+    product_price_result = db.execute("SELECT item_price FROM products WHERE item_name = ?", product_name)
+    if not product_price_result:
+        return jsonify({"error": "Product not found"}), 404
 
-        return redirect("/apple")
+    product_price = float(product_price_result[0]["item_price"])
 
-    return render_template("apple.html")
-
-
-@app.route("/samsung", methods=["GET", "POST"])
-@login_required
-def view_samsung():
-    if request.method == "POST":
-        user_id = session["user_id"]
-
-        product_name = request.form.get("product_name")
-        product_price = db.execute("SELECT item_price FROM products WHERE item_name = ?", product_name)
-        product_price = float(product_price[0]["item_price"])
-        product_quantity = int(request.form.get("quantity"))
-
-        # Check if the item is already in the cart
-        existing_item = db.execute(
-            "SELECT * FROM shopping_cart WHERE user_id = ? AND product_name = ?",
-            user_id, product_name
-        )
-
-        if existing_item:
-            # Update the quantity if the item already exists
-            db.execute(
-                "UPDATE shopping_cart SET quantity = quantity + ? WHERE user_id = ? AND product_name = ?",
-                product_quantity, user_id, product_name
-            )
-        else:
-            # Insert a new item into the cart
-            db.execute(
-                "INSERT INTO shopping_cart (user_id, product_name, product_price, quantity) VALUES (?, ?, ?, ?)",
-                user_id, product_name, product_price, product_quantity
-            )
-
-        db.execute("INSERT INTO purchases(user_id, product_name, product_price, quantity, date) VALUES (?, ?, ?, ?, ?)",
-            user_id, product_name, product_price, product_quantity, get_time()) 
-
-        return redirect("/samsung")
-
-    return render_template("samsung.html")
-
-
-@app.route("/xiaomi", methods=["GET", "POST"])
-@login_required
-def view_xiaomi():
-    if request.method == "POST":
-        user_id = session["user_id"]
-
-        product_name = request.form.get("product_name")
-        product_price = db.execute("SELECT item_price FROM products WHERE item_name = ?", product_name)
-        product_price = float(product_price[0]["item_price"])
-        product_quantity = int(request.form.get("quantity"))
-
-        # Check if the item is already in the cart
-        existing_item = db.execute(
-            "SELECT * FROM shopping_cart WHERE user_id = ? AND product_name = ?",
-            user_id, product_name
-        )
-
-        if existing_item:
-            # Update the quantity if the item already exists
-            db.execute(
-                "UPDATE shopping_cart SET quantity = quantity + ? WHERE user_id = ? AND product_name = ?",
-                product_quantity, user_id, product_name
-            )
-        else:
-            # Insert a new item into the cart
-            db.execute(
-                "INSERT INTO shopping_cart (user_id, product_name, product_price, quantity) VALUES (?, ?, ?, ?)",
-                user_id, product_name, product_price, product_quantity
-            )
-
-        db.execute("INSERT INTO purchases(user_id, product_name, product_price, quantity, date) VALUES (?, ?, ?, ?, ?)",
-             user_id, product_name, product_price, product_quantity, get_time()) 
-        
-        return redirect("/xiaomi")
-
-    return render_template("xiaomi.html")
-    
-
-# Helper function to add or update items in the cart
-def add_or_update_cart(user_id, product_name, product_price, product_quantity):
-    """Helper function to add or update items in the cart"""
     # Check if the item is already in the cart
     existing_item = db.execute(
         "SELECT * FROM shopping_cart WHERE user_id = ? AND product_name = ?",
@@ -230,11 +140,45 @@ def add_or_update_cart(user_id, product_name, product_price, product_quantity):
             user_id, product_name, product_price, product_quantity
         )
 
-    db.execute("INSERT INTO purchases(user_id, product_name, product_price, quantity, date) VALUES (?, ?, ?, ?, ?)",
-        user_id, product_name, product_price, product_quantity, get_time()) 
+    # Calculate the total items in the shopping cart for the user
+    total_items = get_cart_count(user_id)
+
+    # Return JSON response with updated cart count
+    return jsonify({"message": "Item added to cart", "total_items": total_items})
+
+
+
+@app.route("/cart/remove", methods=["POST"])
+@login_required
+def remove_from_cart():
+    """Remove an item from the shopping cart"""
+    user_id = session["user_id"]
+    product_name = request.json.get("product_name")
+
+    # Remove the item from the cart
+    db.execute("DELETE FROM shopping_cart WHERE user_id = ? AND product_name = ?", user_id, product_name)
+
+    # Calculate the total items in the shopping cart for the user
+    cart_items = db.execute("SELECT SUM(quantity) AS total_items FROM shopping_cart WHERE user_id = ?", user_id)
+    total_items = cart_items[0]["total_items"] if cart_items[0]["total_items"] else 0
+
+    # Calculate the updated total price for the user
+    cart_items = db.execute("SELECT product_price, quantity FROM shopping_cart WHERE user_id = ?", user_id)
+    total_price = sum(float(item["product_price"]) * int(item["quantity"]) for item in cart_items)
+
+    # Return JSON response with updated cart count and total price (ensure total_price is 0 if cart is empty)
+    return jsonify({
+        "message": "Item removed from cart",
+        "total_items": total_items,
+        "total_price": float(total_price) if total_price else 0.00
+    })
+
+
+
 
 
 @app.route("/cart")
+@login_required
 def view_cart():
     user_id = session["user_id"]
     cart_items = db.execute(
@@ -247,7 +191,31 @@ def view_cart():
 
 
 @app.route("/checkout")
+@login_required
 def view_checkout():
     user_id = session["user_id"]
     db.execute("DELETE FROM shopping_cart WHERE user_id = ?", user_id)
     return render_template("checkout.html")
+
+
+@app.route("/apple")
+@login_required
+def view_apple():
+    """Render the Apple products page"""
+    user_id = session["user_id"]
+    cart_count = get_cart_count(user_id)
+    return render_template("apple.html", cart_count=cart_count)
+
+
+@app.route("/samsung")
+@login_required
+def view_samsung():
+    """Render the Samsung products page"""
+    return render_template("samsung.html")
+
+
+@app.route("/xiaomi")
+@login_required
+def view_xiaomi():
+    """Render the Xiaomi products page"""
+    return render_template("xiaomi.html")

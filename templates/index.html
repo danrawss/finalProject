@@ -1,45 +1,148 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Index
+    TechTrove - Welcome
 {% endblock %}
 
 {% block main %}
     <!-- Hero Section (Main Banner) -->
-    <section class="hero">
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-logo">
+                <img src="/static/images/techtrove.jpg" alt="TechTrove Logo">
+            </div>
+            <div class="hero-content">
+                <h1>Welcome to TechTrove</h1>
+                <p>Your one-stop shop for the latest tech gadgets.</p>
+                <div class="hero-buttons mt-3">
+                    <a href="/apple" class="btn btn-primary">Shop Apple</a>
+                    <a href="/samsung" class="btn btn-primary">Shop Samsung</a>
+                    <a href="/xiaomi" class="btn btn-primary">Shop Xiaomi</a>
+                </div>
+            </div>
+        </div>
+    </section>    
+
+    <!-- Featured Products Section -->
+    <section class="featured-products py-5">
         <div class="container">
-            <h1>Welcome to TechTrove</h1>
-            <p>Your one-stop shop for the latest tech gadgets.</p>
-            <!-- Add call-to-action buttons or other content here -->
+            <h2 class="text-center my-4">Featured Products</h2>
+            <div class="row">
+                <!-- Example Product Cards -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="/static/images/apple/phones/iphone_16_pro.jpg" class="card-img-top" alt="iPhone 16 Pro">
+                        <div class="card-body">
+                            <h5 class="card-title">iPhone 16 Pro</h5>
+                            <p class="card-text">$1099</p>
+                            <a href="/apple" class="btn btn-outline-primary">View More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="/static/images/samsung/phones/samsung_galaxy_s23.avif" class="card-img-top" alt="Galaxy S23">
+                        <div class="card-body">
+                            <h5 class="card-title">Samsung Galaxy S23</h5>
+                            <p class="card-text">$859</p>
+                            <a href="/samsung" class="btn btn-outline-primary">View More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="/static/images/xiaomi/phones/xiaomi_mi_11.avif" class="card-img-top" alt="Xiaomi Mi 11">
+                        <div class="card-body">
+                            <h5 class="card-title">Xiaomi Mi 11</h5>
+                            <p class="card-text">$599</p>
+                            <a href="/xiaomi" class="btn btn-outline-primary">View More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- About Us Section -->
-    <section class="about-us">
-        <div class="container">
-            <h2>About TechTrove</h2>
-            <p>At TechTrove, we are passionate about technology and innovation. Our mission is to provide you with access to the latest and greatest tech products from leading brands like Apple, Samsung, and Xiaomi.</p>
-            <h2>What We Offer</h2>
-            <p>TechTrove is your one-stop destination for a wide range of tech products, including smartphones, laptops, tablets, headphones, and smartwatches. We handpick each product to ensure quality and performance, so you can shop with confidence.</p>
-            <h2>Why Choose Us</h2>
-            <ul>
-                <li><strong>Quality Assurance:</strong> We only offer products from trusted brands known for their quality and reliability.</li>
-                <li><strong>Expert Advice:</strong> Our team of tech experts is here to assist you in making informed decisions.</li>
-                <li><strong>Customer Satisfaction:</strong> Your satisfaction is our top priority. We are committed to providing exceptional service and support.</li>
-                <li><strong>Convenience:</strong> Shop online and have your favorite tech products delivered to your doorstep.</li>
-            </ul>
-            <h2>Join Us on the Tech Journey</h2>
-            <p>Whether you're upgrading your devices, exploring the latest innovations, or simply staying connected, TechTrove is here to accompany you on your tech journey. We're excited to be part of your tech exploration and look forward to serving you.</p>
+    <section class="about-us py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">About TechTrove</h2>
+            <p class="mb-5">At TechTrove, we are passionate about technology and innovation. Our mission is to provide you with access to the latest and greatest tech products from leading brands like Apple, Samsung, and Xiaomi.</p>
+        
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h3>What We Offer</h3>
+                    <p>TechTrove is your one-stop destination for a wide range of tech products, including smartphones, laptops, tablets, headphones, and smartwatches. We handpick each product to ensure quality and performance, so you can shop with confidence.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h3>Why Choose Us</h3>
+                    <ul class="list-unstyled text-start">
+                        <li><strong>Quality Assurance:</strong> We only offer products from trusted brands known for their quality and reliability.</li>
+                        <li><strong>Expert Advice:</strong> Our team of tech experts is here to assist you in making informed decisions.</li>
+                        <li><strong>Customer Satisfaction:</strong> Your satisfaction is our top priority. We are committed to providing exceptional service and support.</li>
+                        <li><strong>Convenience:</strong> Shop online and have your favorite tech products delivered to your doorstep.</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h3>Join Us on the Tech Journey</h3>
+                    <p>Whether you're upgrading your devices, exploring the latest innovations, or simply staying connected, TechTrove is here to accompany you on your tech journey. We're excited to be part of your tech exploration and look forward to serving you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">What Our Customers Say</h2>
+            <div id="carouselTestimonials" class="carousel slide mt-4" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testimonial-wrapper">
+                            <blockquote class="blockquote">
+                                <p>"TechTrove helped me find the perfect smartphone. Great customer service and fast delivery!"</p>
+                                <footer class="blockquote-footer">Emily R.</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-wrapper">
+                            <blockquote class="blockquote">
+                                <p>"I bought my new MacBook from TechTrove, and I love it! The shopping experience was smooth and easy."</p>
+                                <footer class="blockquote-footer">John D.</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testimonial-wrapper">
+                            <blockquote class="blockquote">
+                                <p>"Amazing products and fantastic support. TechTrove is my favorite tech store now."</p>
+                                <footer class="blockquote-footer">Sarah K.</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselTestimonials" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselTestimonials" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
     </section>
 
+  
     <!-- Contact Section -->
-    <section class="contact">
-        <div class="container">
+    <section class="contact py-5 bg-light">
+        <div class="container text-center">
             <h2>Contact Us</h2>
             <p>Have questions or need assistance? Feel free to reach out to our friendly team. We're always here to help you make the most of your tech experience.</p>
-            <p>Phone: +40 (722) 765-028</p>
-            <p>Email: techtrove@gmail.com</p>
+            <p><i class="bi bi-telephone-fill"></i> Phone: +40 (722) 765-028</p>
+            <p><i class="bi bi-envelope-fill"></i> Email: <a href="mailto:techtrove@gmail.com">techtrove@gmail.com</a></p>
         </div>
     </section>
 {% endblock %}

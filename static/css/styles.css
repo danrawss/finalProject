@@ -220,3 +220,128 @@ td {
         width: 50px;
     }
 }
+
+.toast-notification {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.toast-notification.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.container {
+    max-width: 1200px; /* Set a maximum width */
+    margin: 0 auto; /* Center horizontally */
+    padding: 0 15px;
+}
+
+.hero-section {
+    background-color: #171d2b; /* Dark background to contrast logo and text */
+    padding: 50px 0;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto; /* Horizontally center the container */
+    display: flex;
+    align-items: center; /* Vertically center both logo and content */
+    justify-content: center; /* Optional: Adjusts horizontal space to center container */
+    gap: 50px; /* Space between logo and content */
+    min-height: 300px; /* Adds height for breathing space */
+    padding: 20px;
+}
+
+.hero-logo {
+    flex: 0 0 auto; /* Prevent logo from stretching */
+    max-width: 200px; /* Adjust the size of the logo */
+}
+
+.hero-logo img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+.hero-content {
+    color: #ffffff;
+    flex: 1; /* Allow content to grow if necessary */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the text content */
+    text-align: left;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffffff; /* Bright white for better contrast */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Optional text shadow to make it stand out */
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: #dddddd; /* Slightly lighter to create subtle contrast with the heading */
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.hero-buttons .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.testimonials {
+    max-width: 800px; /* Set maximum width for the whole testimonial section */
+    margin: 0 auto; /* Center the testimonial section */
+    padding: 20px; /* Padding for better aesthetics */
+    box-sizing: border-box; /* Ensure padding doesn't affect the width */
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0; /* Add padding to create spacing around the testimonials */
+}
+
+
+.blockquote {
+    margin: 0 auto;
+    max-width: 600px; /* Limit the blockquote width */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 15px;
+    box-sizing: border-box; 
+}
+
+.blockquote-footer {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Adjusting the carousel navigation buttons */
+.carousel-control-prev,
+.carousel-control-next {
+    filter: brightness(1.5); /* Lighten the arrows for better visibility */
+}
+
