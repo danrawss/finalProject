@@ -93,12 +93,17 @@ def get_cart_count(user_id):
     cart_items = db.execute("SELECT SUM(quantity) AS total_items FROM shopping_cart WHERE user_id = ?", user_id)
     return cart_items[0]["total_items"] if cart_items[0]["total_items"] else 0
 
+def get_wishlist_count(user_id):
+    wishlist_items = db.execute("SELECT COUNT(*) AS total_items FROM wishlist WHERE user_id = ?", user_id)
+    return wishlist_items[0]["total_items"] if wishlist_items[0]["total_items"] else 0
+
 @app.route("/")
 @login_required
 def index():
     user_id = session["user_id"]
     cart_count = get_cart_count(user_id)
-    return render_template("index.html", cart_count=cart_count)
+    wishlist_count = get_wishlist_count(user_id)
+    return render_template("index.html", cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 @app.route("/cart/add", methods=["POST"])
@@ -111,15 +116,16 @@ def add_to_cart():
     if not data:
         return jsonify({"error": "No data provided"}), 400
 
-    product_name = data.get("product_name")
+    product_id = data.get("product_id")
     product_quantity = data.get("quantity", 1)
 
-    # Get product price from the database
-    product_price_result = db.execute("SELECT item_price FROM products WHERE item_name = ?", product_name)
-    if not product_price_result:
+    # Get product details from the database using product_id
+    product = db.execute("SELECT product_name, product_price FROM products WHERE id = ?", product_id)
+    if not product:
         return jsonify({"error": "Product not found"}), 404
 
-    product_price = float(product_price_result[0]["item_price"])
+    product_name = product[0]["product_name"]
+    product_price = float(product[0]["product_price"])
 
     # Check if the item is already in the cart
     existing_item = db.execute(
@@ -145,6 +151,7 @@ def add_to_cart():
 
     # Return JSON response with updated cart count
     return jsonify({"message": "Item added to cart", "total_items": total_items})
+
 
 
 
@@ -174,9 +181,6 @@ def remove_from_cart():
     })
 
 
-
-
-
 @app.route("/cart")
 @login_required
 def view_cart():
@@ -186,8 +190,9 @@ def view_cart():
     )
     
     total_price = sum(float(item["product_price"]) * int(item["quantity"]) for item in cart_items)
-
-    return render_template("cart.html", cart_items=cart_items, total_price=total_price)
+    cart_count = get_cart_count(user_id)
+    wishlist_count = get_wishlist_count(user_id)
+    return render_template("cart.html", cart_items=cart_items, total_price=total_price, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 @app.route("/checkout")
@@ -201,21 +206,112 @@ def view_checkout():
 @app.route("/apple")
 @login_required
 def view_apple():
-    """Render the Apple products page"""
+    """Render the Apple products page with categories"""
     user_id = session["user_id"]
     cart_count = get_cart_count(user_id)
-    return render_template("apple.html", cart_count=cart_count)
+    wishlist_count = get_wishlist_count(user_id)
+
+    # Fetch Apple products grouped by category
+    categories = db.execute("SELECT DISTINCT category FROM products WHERE brand = 'Apple'")
+    categorized_products = {}
+    
+    for category in categories:
+        category_name = category['category']
+        products = db.execute("SELECT * FROM products WHERE brand = 'Apple' AND category = ?", category_name)
+        categorized_products[category_name] = products
+
+    return render_template("apple.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
+
+
 
 
 @app.route("/samsung")
 @login_required
 def view_samsung():
     """Render the Samsung products page"""
-    return render_template("samsung.html")
+    user_id = session["user_id"]
+    cart_count = get_cart_count(user_id)
+    wishlist_count = get_wishlist_count(user_id)
+
+    # Fetch Apple products grouped by category
+    categories = db.execute("SELECT DISTINCT category FROM products WHERE brand = 'Samsung'")
+    categorized_products = {}
+    
+    for category in categories:
+        category_name = category['category']
+        products = db.execute("SELECT * FROM products WHERE brand = 'Samsung' AND category = ?", category_name)
+        categorized_products[category_name] = products
+
+    return render_template("samsung.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 @app.route("/xiaomi")
 @login_required
 def view_xiaomi():
     """Render the Xiaomi products page"""
-    return render_template("xiaomi.html")
+    user_id = session["user_id"]
+    cart_count = get_cart_count(user_id)
+    wishlist_count = get_wishlist_count(user_id)
+
+    # Fetch Apple products grouped by category
+    categories = db.execute("SELECT DISTINCT category FROM products WHERE brand = 'Xiaomi'")
+    categorized_products = {}
+    
+    for category in categories:
+        category_name = category['category']
+        products = db.execute("SELECT * FROM products WHERE brand = 'Xiaomi' AND category = ?", category_name)
+        categorized_products[category_name] = products
+
+    return render_template("xiaomi.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
+
+
+@app.route("/wishlist")
+@login_required
+def view_wishlist():
+    user_id = session["user_id"]
+    wishlist_items = db.execute(
+        "SELECT products.* FROM wishlist JOIN products ON wishlist.product_id = products.id WHERE wishlist.user_id = ?", 
+        user_id
+    )
+
+    cart_count = get_cart_count(user_id)
+    wishlist_count = get_wishlist_count(user_id)
+
+    return render_template("wishlist.html", wishlist_items=wishlist_items, cart_count=cart_count, wishlist_count=wishlist_count)
+
+
+@app.route("/wishlist/add", methods=["POST"])
+@login_required
+def add_to_wishlist():
+    user_id = session["user_id"]
+    data = request.get_json()
+    product_id = data.get("product_id")
+
+    if not product_id:
+        return jsonify({"error": "Product ID is required"}), 400
+
+    existing_item = db.execute(
+        "SELECT * FROM wishlist WHERE user_id = ? AND product_id = ?", user_id, product_id
+    )
+
+    if not existing_item:
+        db.execute("INSERT INTO wishlist (user_id, product_id) VALUES (?, ?)", user_id, product_id)
+
+    total_items = get_wishlist_count(user_id)
+    
+    return jsonify({"message": "Item added to wishlist", "total_items": total_items})
+
+
+@app.route("/wishlist/remove", methods=["POST"])
+@login_required
+def remove_from_wishlist():
+    user_id = session["user_id"]
+    data = request.get_json()
+    product_id = data.get("product_id")
+
+    if product_id:
+        db.execute("DELETE FROM wishlist WHERE user_id = ? AND product_id = ?", user_id, product_id)
+        total_items = get_wishlist_count(user_id)  # Assuming this function calculates the new wishlist count.
+        return jsonify({"message": "Item removed from wishlist", "total_items": total_items})
+    else:
+        return jsonify({"error": "Product ID is required"}), 400

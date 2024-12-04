@@ -3,31 +3,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
         button.addEventListener("click", () => {
-            const productName = button.getAttribute("data-product-name");
-            const quantityElement = button.parentElement.querySelector("input[name='quantity']");
-            const quantity = quantityElement ? parseInt(quantityElement.value) : 1;
+            const productId = button.getAttribute("data-product-id");
 
-            // Make an AJAX request to add the product to the cart
             fetch("/cart/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    "product_name": productName,
-                    "quantity": quantity
-                })
+                body: JSON.stringify({ "product_id": productId, "quantity": 1 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.message) {
-                    showToast(data.message); // Display the toast notification with the response message
-                }
+                    showToast(data.message);
 
-                // Update cart count
-                const cartCountElement = document.querySelector("#cart-item-count");
-                if (cartCountElement) {
-                    cartCountElement.textContent = data.total_items;
+                    // Update cart count after adding item
+                    const cartCountElement = document.querySelector("#cart-item-count");
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.total_items;
+                    }
                 }
             })
             .catch(error => {
@@ -89,6 +83,91 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Add to Wishlist button event listener
+    const addToWishlistButtons = document.querySelectorAll(".add-to-wishlist-btn");
+    addToWishlistButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const productId = button.getAttribute("data-product-id");
+
+            fetch("/wishlist/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "product_id": productId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    showToast(data.message);
+                }
+                const wishlistCountElement = document.querySelector("#wishlist-item-count");
+                if (wishlistCountElement) {
+                    wishlistCountElement.textContent = data.total_items;
+                }
+            })
+            .catch(error => {
+                console.error("Error adding item to wishlist:", error);
+                showToast("Failed to add item to wishlist. Please try again.");
+            });
+        });
+    });
+
+    // Select all remove buttons for wishlist items
+    const removeFromWishlistButtons = document.querySelectorAll(".remove-from-wishlist-btn");
+    removeFromWishlistButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const productId = button.getAttribute("data-product-id");
+
+            // Make an AJAX request to remove the item from the wishlist
+            fetch("/wishlist/remove", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ "product_id": productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message) {
+                    // Show success message in toast
+                    showToast(data.message);
+                    
+                    // Remove the product element from the DOM
+                    const productElement = button.closest(".product");
+                    if (productElement) {
+                        productElement.remove();
+                    }
+
+                    // Update the wishlist count
+                    const wishlistCountElement = document.querySelector("#wishlist-item-count");
+                    if (wishlistCountElement) {
+                        wishlistCountElement.textContent = data.total_items;
+                    }
+
+                    if (data.total_items === 0) {
+                        const wishlistContainer = document.querySelector(".wishlist-items-container");
+                        wishlistContainer.innerHTML = `
+                            <p>Your wishlist is empty. <a href="/">Start adding products to your wishlist now!</a></p>
+                        `;
+                    }  
+                }
+            })
+            .catch(error => {
+                console.error("Error removing item from wishlist:", error);
+                showToast("Failed to remove item from wishlist. Please try again.");
+            });          
+        });
+    });
+      
+    
     // Function to show a toast notification
     function showToast(message) {
         const toast = document.getElementById("toast-notification");
@@ -135,4 +214,8 @@ function updateCartItemCount(count) {
     if (cartItemCountElement) {
         cartItemCountElement.textContent = count;
     }
+}
+
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
 }

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Wishlist
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1 class="my-4">Your Wishlist</h1>
+    <div class="wishlist-items-container">
+        {% if wishlist_items %}
+            <div class="product-grid">
+                {% for item in wishlist_items %}
+                <div class="product">
+                    <div class="product-image">
+                        <img src="{{ item['image_url'] }}" alt="{{ item['product_name'] }}">
+                    </div>
+                    <div class="product-details">
+                        <h3>{{ item['product_name'] }}</h3>
+                        <p class="product-price">${{ '%.2f' | format(item['product_price']) }}</p>
+                    </div>
+                    <div class="product-actions">
+                        <button type="button" class="add-to-cart-btn" data-product-id="{{ item['id'] }}">
+                            Add to Cart
+                        </button>
+                        <button type="button" class="remove-from-wishlist-btn" data-product-id="{{ item['id'] }}">
+                            Remove from Wishlist
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Your wishlist is empty. <a href="/">Start adding products to your wishlist now!</a></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
