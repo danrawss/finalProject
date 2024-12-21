@@ -1,0 +1,20 @@
+# Environment variables
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Flask session data
+flask_session/
+
+# SQLite database
+database.db
+
+# Logs (if you create any in the future)
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db

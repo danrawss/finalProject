@@ -1,10 +1,13 @@
+from dotenv import load_dotenv
 import os
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, get_time
+from helpers import apology, login_required, get_time, send_email
+
+load_dotenv()
 
 # Configure application
 app = Flask(__name__)
@@ -15,7 +18,9 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///database.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+db = SQL(DATABASE_URL)
+
 
 @app.after_request
 def after_request(response):
@@ -195,12 +200,63 @@ def view_cart():
     return render_template("cart.html", cart_items=cart_items, total_price=total_price, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
-@app.route("/checkout")
+@app.route("/checkout", methods=["GET", "POST"])
 @login_required
 def view_checkout():
-    user_id = session["user_id"]
-    db.execute("DELETE FROM shopping_cart WHERE user_id = ?", user_id)
-    return render_template("checkout.html")
+    user_id = session.get("user_id")
+
+    # Fetch cart items
+    cart_items = db.execute(
+        "SELECT product_name, product_price, quantity FROM shopping_cart WHERE user_id = ?", user_id
+    )
+    total_price = sum(float(item["product_price"]) * int(item["quantity"]) for item in cart_items)
+
+    if request.method == "POST":
+        # Collect shipping details
+        data = request.get_json()
+        full_name = data.get("fullName")
+        address = data.get("address")
+        city = data.get("city")
+        postal_code = data.get("postalCode")
+        phone = data.get("phone")
+        email = data.get("email")
+
+        if not all([full_name, address, city, postal_code, phone]):
+            return jsonify({"error": "All shipping fields are required"}), 400
+
+        # Clear the cart after placing the order
+        db.execute("DELETE FROM shopping_cart WHERE user_id = ?", user_id)
+
+        # Prepare email content
+        email_subject = "Your TechTrove Order Confirmation"
+        email_body = f"""Dear {full_name},
+
+        Thank you for your order! Here are the details:
+
+        Shipping Address:
+        {address}
+        {city}, {postal_code}
+
+        Order Summary:
+        """
+        for item in cart_items:
+            email_body += f"- {item['product_name']} x {item['quantity']} - ${float(item['product_price']) * int(item['quantity']):.2f}\n"
+        email_body += f"\nTotal: ${total_price:.2f}\n\nWe hope to see you again soon!\n\nTechTrove Team"
+
+        try:
+            send_email(email, email_subject, email_body)
+        except Exception as e:
+            return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
+        
+        return jsonify({"message": "Order placed successfully", "redirect_url": "/checkout_success"}), 200
+
+    return render_template("checkout.html", cart_items=cart_items, total_price=total_price)
+
+
+@app.route("/checkout_success")
+@login_required
+def checkout_success():
+    return render_template("checkout_success.html")
 
 
 @app.route("/apple")
@@ -220,7 +276,9 @@ def view_apple():
         products = db.execute("SELECT * FROM products WHERE brand = 'Apple' AND category = ?", category_name)
         categorized_products[category_name] = products
 
-    return render_template("apple.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
+    best_products = db.execute("SELECT * FROM products WHERE brand = 'Apple' ORDER BY product_price DESC LIMIT 3")
+
+    return render_template("apple.html", categorized_products=categorized_products, best_products=best_products, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 
@@ -242,7 +300,9 @@ def view_samsung():
         products = db.execute("SELECT * FROM products WHERE brand = 'Samsung' AND category = ?", category_name)
         categorized_products[category_name] = products
 
-    return render_template("samsung.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
+    best_products = db.execute("SELECT * FROM products WHERE brand = 'Samsung' ORDER BY product_price DESC LIMIT 3")
+
+    return render_template("samsung.html", categorized_products=categorized_products, best_products=best_products, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 @app.route("/xiaomi")
@@ -262,7 +322,9 @@ def view_xiaomi():
         products = db.execute("SELECT * FROM products WHERE brand = 'Xiaomi' AND category = ?", category_name)
         categorized_products[category_name] = products
 
-    return render_template("xiaomi.html", categorized_products=categorized_products, cart_count=cart_count, wishlist_count=wishlist_count)
+    best_products = db.execute("SELECT * FROM products WHERE brand = 'Xiaomi' ORDER BY product_price DESC LIMIT 3")
+
+    return render_template("xiaomi.html", categorized_products=categorized_products, best_products=best_products, cart_count=cart_count, wishlist_count=wishlist_count)
 
 
 @app.route("/wishlist")

@@ -166,8 +166,40 @@ document.addEventListener("DOMContentLoaded", () => {
             });          
         });
     });
-      
     
+    const placeOrderButton = document.getElementById("place-order-btn");
+    placeOrderButton.addEventListener("click", () => {
+        const form = document.getElementById("shipping-form");
+
+        if (form) {
+            // Collect form data
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries()); 
+
+            // Send AJAX request
+            fetch("/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message); 
+                    window.location.href = "/checkout_success"; 
+                } else if (data.error) {
+                    alert(data.error); 
+                }
+            })
+            .catch(error => {
+                console.error("Error placing order:", error);
+            });
+        }
+    });
+    
+
     // Function to show a toast notification
     function showToast(message) {
         const toast = document.getElementById("toast-notification");
