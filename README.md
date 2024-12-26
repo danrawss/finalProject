@@ -3,20 +3,23 @@
 ### Description
 **TECHTROVE** is a dynamic e-commerce platform offering a seamless shopping experience for tech enthusiasts. Developed with a responsive front-end using **HTML**, **CSS**, and **JavaScript**, and a secure back-end powered by **Flask** and **SQLite**.
 
-Key features include:
-- **User Authentication**: Secure registration and login processes.
-- **Shopping Cart**: Users can add, update, and remove items in their shopping cart.
-- **Wishlist**: Users can save products to their wishlist for easy access later.
-- **Product Management**: Categorized product displays with improved browsing and navigation.
-- **Data Management**: SQLite database is used for user information, products, carts, wishlists, and purchase history.
+### Key Features
+- **User Authentication**: Secure login and registration, ensuring privacy and security for all users.
+- **Product Search with Autocomplete**: Users can easily search for products using a dynamic search bar with autocomplete suggestions.
+- **Shopping Cart**: Add, update, or remove items in the cart with real-time updates.
+- **Wishlist**: Save favorite products to a wishlist for future access.
+- **Dynamic Product Pages**: Category-based browsing for Apple, Samsung, and Xiaomi products.
+- **Order Checkout**: Collect user shipping details and process orders (no actual payment processing implemented).
+- **Order History**: Store purchase information in the database for future reference.
+- **Email Notifications**: Order confirmation emails are sent to users after checkout.
+- **Error Handling**: Apology pages for handling invalid input or access errors.
 
-### Main Components
+### Project Structure
 
 - **Python Files**:
   - **`app.py`**: The main application file managing routes, authentication, cart operations, wishlist, and other functionalities.
   - **`helpers.py`**: Contains helper functions for various tasks such as hashing passwords, session management, and utilities.
   - **`db.py`**: The python script to setup the database.
-  - **`database.db`**: The SQLite database used to store user, product, wishlist, shopping cart, and purchase information.
 
 - **HTML Templates**:
   - **Authentication Pages**:
@@ -27,6 +30,8 @@ Key features include:
     - **`apple.html`**, **`samsung.html`**, **`xiaomi.html`**: Brand-specific pages for browsing and purchasing products.
     - **`cart.html`**: Shopping cart page, displaying items users have added, allowing modifications.
     - **`wishlist.html`**: Wishlist page, showing saved products with options to add to the cart or remove.
+    - **`checkout.html`**: Form to collect shipping details and complete purchases.
+    - **`checkout_success.html`**: Confirmation page displayed after a successful order.
   
 - **JavaScript**:
   - **`main.js`**: Handles client-side interactions, such as adding/removing items from the cart and wishlist, and providing notifications.
