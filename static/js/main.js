@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search-bar");  
+    autocomplete(searchInput);
+    
     // Add event listeners for adding to cart
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
@@ -199,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     
-
     // Function to show a toast notification
     function showToast(message) {
         const toast = document.getElementById("toast-notification");
@@ -250,4 +252,107 @@ function updateCartItemCount(count) {
 
 function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+function autocomplete(inp) {
+    var currentFocus;
+
+    inp.addEventListener("input", function(e) {
+        var val = this.value;
+
+        closeAllLists();
+        if (!val) {
+            return false;
+        }
+        currentFocus = -1;
+
+        // Fetch matching suggestions from the backend
+        fetch(`/search/autocomplete?q=${encodeURIComponent(val)}`)
+            .then(response => response.json())
+            .then(arr => {
+                /* Create a DIV element that will contain the items (values): */
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /* Append the DIV element as a child of the autocomplete container: */
+                this.parentNode.appendChild(a);
+
+                /* For each item in the array */
+                arr.forEach((product) => {
+                    /* Create a DIV element for each matching element */
+                    var b = document.createElement("DIV");
+                    b.innerHTML = `<strong>${product.substr(0, val.length)}</strong>${product.substr(val.length)}`;
+                    b.innerHTML += `<input type='hidden' value='${product}'>`;
+
+                    /* Execute a function when someone clicks on the item value (DIV element) */
+                    b.addEventListener("click", function(e) {
+                        /* Insert the value for the autocomplete text field */
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /* Close the list of autocompleted values */
+                        closeAllLists();
+                    });
+
+                    a.appendChild(b);
+                });
+            })
+            .catch(error => console.error("Autocomplete error:", error));
+    });
+
+    /* Execute a function when a key is pressed on the keyboard */
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+            /* If the arrow DOWN key is pressed, increase the currentFocus variable */
+            currentFocus++;
+            /* And make the current item more visible */
+            addActive(x);
+        } else if (e.keyCode == 38) { // UP
+            /* If the arrow UP key is pressed, decrease the currentFocus variable */
+            currentFocus--;
+            /* And make the current item more visible */
+            addActive(x);
+        } else if (e.keyCode == 13) {
+            /* If the ENTER key is pressed, prevent the form from being submitted */
+            e.preventDefault();
+            if (currentFocus > -1) {
+                /* And simulate a click on the "active" item */
+                if (x) x[currentFocus].click();
+            }
+        }
+    });
+
+    function addActive(x) {
+        /* A function to classify an item as "active" */
+        if (!x) return false;
+        /* Start by removing the "active" class on all items */
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        /* Add class "autocomplete-active" */
+        x[currentFocus].classList.add("autocomplete-active");
+    }
+
+    function removeActive(x) {
+        /* A function to remove the "active" class from all autocomplete items */
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    }
+
+    function closeAllLists(elmnt) {
+        /* Close all autocomplete lists in the document,
+           except the one passed as an argument */
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    }
+
+    /* Execute a function when someone clicks in the document */
+    document.addEventListener("click", function(e) {
+        closeAllLists(e.target);
+    });
 }

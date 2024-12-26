@@ -10,7 +10,7 @@ __pycache__/
 flask_session/
 
 # SQLite database
-database.db
+*.db
 
 # Logs (if you create any in the future)
 *.log

@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the database (or create it if it doesn't exist)
-connection = sqlite3.connect('database.db')
+connection = sqlite3.connect('techtrove.db')
 
 # Create a cursor object
 cursor = connection.cursor()
@@ -68,6 +68,28 @@ CREATE TABLE IF NOT EXISTS wishlist (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 ''')
+
+# Add the orders table (if not already added)
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    product_name TEXT NOT NULL,
+    product_price DECIMAL(10, 2) NOT NULL,
+    quantity INTEGER NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
+    full_name TEXT NOT NULL,
+    address TEXT NOT NULL,
+    city TEXT NOT NULL,
+    postal_code TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    email TEXT NOT NULL,
+    order_time TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+''')
+
 
 # Insert statements for Apple products
 products = [

@@ -4,6 +4,8 @@ from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+import uuid
+import re
 
 from helpers import apology, login_required, get_time, send_email
 
@@ -11,6 +13,7 @@ load_dotenv()
 
 # Configure application
 app = Flask(__name__)
+
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
@@ -77,14 +80,22 @@ def register():
     """Register user"""
     if request.method == "POST":
         username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
         if not username:
             return apology("Username cannot be blank.", 400)
+
+        if not password or password != confirmation:
+            return apology("Passwords must match.", 400)
+       
+        if len(password) < 8 or not re.search(r"[a-z]", password) or not re.search(r"[A-Z]", password) \
+           or not re.search(r"\d", password) or not re.search(r"[@$!%*?&]", password):
+            return apology("Password must be at least 8 characters long, include a mix of upper and lower case letters, a number, and a special character.", 400)
+        
         usernamecheck = db.execute("SELECT * FROM users WHERE username = ?", username)
         if len(usernamecheck) > 0:
             return apology("Username already exists. Please choose a different one.", 400)
-
-        if not request.form.get("password") or request.form.get("password") != request.form.get("confirmation"):
-            return apology("The invalid password was provided. Try again", 400)
 
         db.execute("INSERT INTO users(username, hash) VALUES(?, ?)", username,
                    generate_password_hash(request.form.get("password"), method='pbkdf2', salt_length=16))
@@ -109,6 +120,39 @@ def index():
     cart_count = get_cart_count(user_id)
     wishlist_count = get_wishlist_count(user_id)
     return render_template("index.html", cart_count=cart_count, wishlist_count=wishlist_count)
+
+
+@app.route("/search")
+@login_required
+def search():
+    user_id = session["user_id"]
+    cart_count = get_cart_count(user_id)
+    wishlist_count = get_wishlist_count(user_id)
+
+    query = request.args.get("query")
+    if not query:
+        return redirect("/")  # Redirect to home if no query provided
+
+    # Search for matching products in the database
+    products = db.execute("SELECT * FROM products WHERE product_name LIKE ?", f"%{query}%")
+    return render_template("search_results.html", products=products, query=query, cart_count=cart_count, wishlist_count=wishlist_count)
+
+
+@app.route("/search/autocomplete", methods=["GET"])
+def search_autocomplete():
+    query = request.args.get("q", "").lower()  # Get query parameter
+    if not query:
+        return jsonify([])  # Return empty list if no query provided
+
+    # Fetch matching product names from the database
+    results = db.execute(
+        "SELECT product_name FROM products WHERE LOWER(product_name) LIKE ? LIMIT 10",
+        f"%{query}%"
+    )
+    
+    # Extract product names
+    suggestions = [row["product_name"] for row in results]
+    return jsonify(suggestions)
 
 
 @app.route("/cart/add", methods=["POST"])
@@ -227,18 +271,39 @@ def view_checkout():
         # Clear the cart after placing the order
         db.execute("DELETE FROM shopping_cart WHERE user_id = ?", user_id)
 
+        order_id = uuid.uuid4().hex
+        order_time = get_time()
+
+        for item in cart_items:
+            db.execute(
+                "INSERT INTO orders (order_id, user_id, product_name, product_price, quantity, total_price, full_name, address, city, postal_code, phone, email, order_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                order_id,
+                user_id,
+                item["product_name"],
+                item["product_price"],
+                item["quantity"],
+                total_price,
+                full_name,
+                address,
+                city,
+                postal_code,
+                phone,
+                email,
+                order_time,
+            )
+
         # Prepare email content
         email_subject = "Your TechTrove Order Confirmation"
         email_body = f"""Dear {full_name},
 
-        Thank you for your order! Here are the details:
+Thank you for your order! Here are the details:
 
-        Shipping Address:
-        {address}
-        {city}, {postal_code}
+Shipping Address:
+{address}
+{city}, {postal_code}
 
-        Order Summary:
-        """
+Order Summary:
+"""
         for item in cart_items:
             email_body += f"- {item['product_name']} x {item['quantity']} - ${float(item['product_price']) * int(item['quantity']):.2f}\n"
         email_body += f"\nTotal: ${total_price:.2f}\n\nWe hope to see you again soon!\n\nTechTrove Team"

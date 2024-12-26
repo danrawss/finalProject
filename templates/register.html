@@ -10,7 +10,8 @@
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must be at least 8 characters long, contain uppercase and lowercase letters, a number, and a special character.">
         </div>
         <div class="mb-3">
             <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Password" type="password">
