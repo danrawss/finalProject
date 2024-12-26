@@ -1,8 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-bar");  
+    // Initialize autocomplete functionality
+    const searchInput = document.getElementById("search-bar");
     autocomplete(searchInput);
-    
-    // Add event listeners for adding to cart
+
+    // Add event listeners for cart operations
+    setupCartEventListeners();
+
+    // Add event listeners for wishlist operations
+    setupWishlistEventListeners();
+
+    // Add event listener for placing orders
+    setupOrderEventListener();
+});
+
+/**
+ * Set up event listeners for adding/removing items in the shopping cart.
+ */
+function setupCartEventListeners() {
+    // Add to cart functionality
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -10,83 +25,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch("/cart/add", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ "product_id": productId, "quantity": 1 })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_id: productId, quantity: 1 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    showToast(data.message);
-
-                    // Update cart count after adding item
-                    const cartCountElement = document.querySelector("#cart-item-count");
-                    if (cartCountElement) {
-                        cartCountElement.textContent = data.total_items;
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast(data.message);
+                        updateCartCount(data.total_items);
                     }
-                }
-            })
-            .catch(error => {
-                console.error("Error adding item to cart:", error);
-            });
+                })
+                .catch(error => console.error("Error adding item to cart:", error));
         });
     });
 
-    // Add event listeners for removing from cart
+    // Remove from cart functionality
     const removeFromCartButtons = document.querySelectorAll(".remove-from-cart-btn");
     removeFromCartButtons.forEach(button => {
         button.addEventListener("click", () => {
             const productName = button.getAttribute("data-product-name");
 
-            // Make an AJAX request to remove the product from the cart
             fetch("/cart/remove", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "product_name": productName
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_name: productName })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast(data.message);
+                        updateCartCount(data.total_items);
+                        updateCartUIAfterRemoval(button, data.total_price, data.total_items);
+                    }
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    showToast(data.message); // Display the toast notification with the response message
-                }
-
-                // Update cart count
-                const cartCountElement = document.querySelector("#cart-item-count");
-                if (cartCountElement) {
-                    cartCountElement.textContent = data.total_items;
-                }
-
-                // Optionally, remove the row of the removed item from the cart page
-                const itemRow = button.closest("tr");
-                if (itemRow) {
-                    itemRow.remove();
-                }
-
-                const totalPriceElement = document.querySelector("#total-price");
-                if (totalPriceElement) {
-                    totalPriceElement.textContent = data.total_price.toFixed(2);
-                }
-
-                // Check if the cart is empty and update the UI accordingly
-                if (data.total_items === 0) {
-                    const cartContainer = document.querySelector(".cart-items-container");
-                    cartContainer.innerHTML = `
-                        <p class="empty-cart-message">Your shopping cart is empty. <a href="/">Start shopping now!</a></p>
-                    `;
-                }
-            })
-            .catch(error => {
-                console.error("Error removing item from cart:", error);
-            });
+                .catch(error => console.error("Error removing item from cart:", error));
         });
     });
+}
 
-    // Add to Wishlist button event listener
+/**
+ * Set up event listeners for wishlist operations.
+ */
+function setupWishlistEventListeners() {
+    // Add to wishlist functionality
     const addToWishlistButtons = document.querySelectorAll(".add-to-wishlist-btn");
     addToWishlistButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -94,265 +75,206 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch("/wishlist/add", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "product_id": productId
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_id: productId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast(data.message);
+                        updateWishlistCount(data.total_items);
+                    }
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    showToast(data.message);
-                }
-                const wishlistCountElement = document.querySelector("#wishlist-item-count");
-                if (wishlistCountElement) {
-                    wishlistCountElement.textContent = data.total_items;
-                }
-            })
-            .catch(error => {
-                console.error("Error adding item to wishlist:", error);
-                showToast("Failed to add item to wishlist. Please try again.");
-            });
+                .catch(error => console.error("Error adding item to wishlist:", error));
         });
     });
 
-    // Select all remove buttons for wishlist items
+    // Remove from wishlist functionality
     const removeFromWishlistButtons = document.querySelectorAll(".remove-from-wishlist-btn");
     removeFromWishlistButtons.forEach(button => {
         button.addEventListener("click", () => {
             const productId = button.getAttribute("data-product-id");
 
-            // Make an AJAX request to remove the item from the wishlist
             fetch("/wishlist/remove", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ "product_id": productId })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_id: productId })
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.message) {
-                    // Show success message in toast
-                    showToast(data.message);
-                    
-                    // Remove the product element from the DOM
-                    const productElement = button.closest(".product");
-                    if (productElement) {
-                        productElement.remove();
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showToast(data.message);
+                        updateWishlistCount(data.total_items);
+                        removeWishlistItem(button, data.total_items);
                     }
-
-                    // Update the wishlist count
-                    const wishlistCountElement = document.querySelector("#wishlist-item-count");
-                    if (wishlistCountElement) {
-                        wishlistCountElement.textContent = data.total_items;
-                    }
-
-                    if (data.total_items === 0) {
-                        const wishlistContainer = document.querySelector(".wishlist-items-container");
-                        wishlistContainer.innerHTML = `
-                            <p>Your wishlist is empty. <a href="/">Start adding products to your wishlist now!</a></p>
-                        `;
-                    }  
-                }
-            })
-            .catch(error => {
-                console.error("Error removing item from wishlist:", error);
-                showToast("Failed to remove item from wishlist. Please try again.");
-            });          
+                })
+                .catch(error => console.error("Error removing item from wishlist:", error));
         });
     });
-    
+}
+
+/**
+ * Set up event listener for placing an order.
+ */
+function setupOrderEventListener() {
     const placeOrderButton = document.getElementById("place-order-btn");
-    placeOrderButton.addEventListener("click", () => {
-        const form = document.getElementById("shipping-form");
+    if (placeOrderButton) {
+        placeOrderButton.addEventListener("click", () => {
+            const form = document.getElementById("shipping-form");
+            if (form) {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
 
-        if (form) {
-            // Collect form data
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries()); 
-
-            // Send AJAX request
-            fetch("/checkout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message); 
-                    window.location.href = "/checkout_success"; 
-                } else if (data.error) {
-                    alert(data.error); 
-                }
-            })
-            .catch(error => {
-                console.error("Error placing order:", error);
-            });
-        }
-    });
-    
-    // Function to show a toast notification
-    function showToast(message) {
-        const toast = document.getElementById("toast-notification");
-        const toastMessage = document.getElementById("toast-message");
-
-        toastMessage.textContent = message;
-        toast.classList.add("show");
-
-        // Hide the toast after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 3000);
+                fetch("/checkout", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            alert(data.message);
+                            window.location.href = "/checkout_success";
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error("Error placing order:", error));
+            }
+        });
     }
-});
+}
 
-// Function to display flash messages dynamically
-function displayFlashMessage(message, category) {
-    let flashMessagesContainer = document.getElementById('flash-messages');
-    if (!flashMessagesContainer) {
-        flashMessagesContainer = document.createElement('div');
-        flashMessagesContainer.id = 'flash-messages';
-        flashMessagesContainer.classList.add('container', 'mt-3');
-        document.body.prepend(flashMessagesContainer);
-    }
+/**
+ * Function to display a toast notification.
+ */
+function showToast(message) {
+    const toast = document.getElementById("toast-notification");
+    const toastMessage = document.getElementById("toast-message");
 
-    let alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${category}`;
-    alertDiv.textContent = message;
-    flashMessagesContainer.appendChild(alertDiv);
+    toastMessage.textContent = message;
+    toast.classList.add("show");
 
-    // Remove the flash message after 3 seconds
     setTimeout(() => {
-        alertDiv.style.transition = 'opacity 0.5s ease';
-        alertDiv.style.opacity = '0';
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 500);
+        toast.classList.remove("show");
     }, 3000);
 }
 
-// Function to update the cart item count
-function updateCartItemCount(count) {
-    let cartItemCountElement = document.getElementById('cart-item-count');
-    if (cartItemCountElement) {
-        cartItemCountElement.textContent = count;
-    }
-}
-
-function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-}
-
+/**
+ * Autocomplete functionality for the search bar.
+ */
 function autocomplete(inp) {
-    var currentFocus;
+    let currentFocus;
 
-    inp.addEventListener("input", function(e) {
-        var val = this.value;
+    inp.addEventListener("input", function () {
+        const val = this.value;
 
         closeAllLists();
-        if (!val) {
-            return false;
-        }
-        currentFocus = -1;
+        if (!val) return;
 
-        // Fetch matching suggestions from the backend
         fetch(`/search/autocomplete?q=${encodeURIComponent(val)}`)
             .then(response => response.json())
             .then(arr => {
-                /* Create a DIV element that will contain the items (values): */
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
-                /* Append the DIV element as a child of the autocomplete container: */
-                this.parentNode.appendChild(a);
-
-                /* For each item in the array */
-                arr.forEach((product) => {
-                    /* Create a DIV element for each matching element */
-                    var b = document.createElement("DIV");
-                    b.innerHTML = `<strong>${product.substr(0, val.length)}</strong>${product.substr(val.length)}`;
-                    b.innerHTML += `<input type='hidden' value='${product}'>`;
-
-                    /* Execute a function when someone clicks on the item value (DIV element) */
-                    b.addEventListener("click", function(e) {
-                        /* Insert the value for the autocomplete text field */
-                        inp.value = this.getElementsByTagName("input")[0].value;
-                        /* Close the list of autocompleted values */
-                        closeAllLists();
-                    });
-
-                    a.appendChild(b);
-                });
+                createAutocompleteList(this, arr, val);
             })
             .catch(error => console.error("Autocomplete error:", error));
     });
 
-    /* Execute a function when a key is pressed on the keyboard */
-    inp.addEventListener("keydown", function(e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
+    inp.addEventListener("keydown", function (e) {
+        const x = document.getElementById(this.id + "autocomplete-list");
+        if (x) var items = x.getElementsByTagName("div");
+
         if (e.keyCode == 40) {
-            /* If the arrow DOWN key is pressed, increase the currentFocus variable */
             currentFocus++;
-            /* And make the current item more visible */
-            addActive(x);
-        } else if (e.keyCode == 38) { // UP
-            /* If the arrow UP key is pressed, decrease the currentFocus variable */
+            addActive(items);
+        } else if (e.keyCode == 38) {
             currentFocus--;
-            /* And make the current item more visible */
-            addActive(x);
+            addActive(items);
         } else if (e.keyCode == 13) {
-            /* If the ENTER key is pressed, prevent the form from being submitted */
             e.preventDefault();
-            if (currentFocus > -1) {
-                /* And simulate a click on the "active" item */
-                if (x) x[currentFocus].click();
-            }
+            if (currentFocus > -1 && items) items[currentFocus].click();
         }
     });
 
-    function addActive(x) {
-        /* A function to classify an item as "active" */
-        if (!x) return false;
-        /* Start by removing the "active" class on all items */
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-        /* Add class "autocomplete-active" */
-        x[currentFocus].classList.add("autocomplete-active");
-    }
-
-    function removeActive(x) {
-        /* A function to remove the "active" class from all autocomplete items */
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    }
-
-    function closeAllLists(elmnt) {
-        /* Close all autocomplete lists in the document,
-           except the one passed as an argument */
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
-                x[i].parentNode.removeChild(x[i]);
-            }
-        }
-    }
-
-    /* Execute a function when someone clicks in the document */
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
         closeAllLists(e.target);
     });
+
+    function createAutocompleteList(input, suggestions, query) {
+        const listContainer = document.createElement("div");
+        listContainer.setAttribute("id", input.id + "autocomplete-list");
+        listContainer.setAttribute("class", "autocomplete-items");
+
+        suggestions.forEach(item => {
+            const suggestion = document.createElement("div");
+            suggestion.innerHTML = `<strong>${item.substr(0, query.length)}</strong>${item.substr(query.length)}`;
+            suggestion.innerHTML += `<input type='hidden' value='${item}'>`;
+            suggestion.addEventListener("click", () => {
+                input.value = suggestion.getElementsByTagName("input")[0].value;
+                closeAllLists();
+            });
+            listContainer.appendChild(suggestion);
+        });
+
+        input.parentNode.appendChild(listContainer);
+    }
+
+    function addActive(items) {
+        if (!items) return;
+        removeActive(items);
+        if (currentFocus >= items.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = items.length - 1;
+        items[currentFocus].classList.add("autocomplete-active");
+    }
+
+    function removeActive(items) {
+        for (let i = 0; i < items.length; i++) {
+            items[i].classList.remove("autocomplete-active");
+        }
+    }
+
+    function closeAllLists(element) {
+        const lists = document.getElementsByClassName("autocomplete-items");
+        for (let i = 0; i < lists.length; i++) {
+            if (element != lists[i] && element != inp) {
+                lists[i].parentNode.removeChild(lists[i]);
+            }
+        }
+    }
+}
+
+/**
+ * Utility functions for UI updates.
+ */
+function updateCartCount(count) {
+    const cartItemCount = document.getElementById("cart-item-count");
+    if (cartItemCount) cartItemCount.textContent = count;
+}
+
+function updateWishlistCount(count) {
+    const wishlistItemCount = document.getElementById("wishlist-item-count");
+    if (wishlistItemCount) wishlistItemCount.textContent = count;
+}
+
+function updateCartUIAfterRemoval(button, totalPrice, totalItems) {
+    const itemRow = button.closest("tr");
+    if (itemRow) itemRow.remove();
+
+    const totalPriceElement = document.getElementById("total-price");
+    if (totalPriceElement) totalPriceElement.textContent = totalPrice.toFixed(2);
+
+    if (totalItems === 0) {
+        const cartContainer = document.querySelector(".cart-items-container");
+        cartContainer.innerHTML = `<p>Your shopping cart is empty. <a href="/">Start shopping now!</a></p>`;
+    }
+}
+
+function removeWishlistItem(button, totalItems) {
+    const productElement = button.closest(".product");
+    if (productElement) productElement.remove();
+
+    if (totalItems === 0) {
+        const wishlistContainer = document.querySelector(".wishlist-items-container");
+        wishlistContainer.innerHTML = `<p>Your wishlist is empty. <a href="/">Start adding products now!</a></p>`;
+    }
 }

@@ -73,18 +73,6 @@ nav .navbar-brand {
 nav .navbar-brand:hover {
     color: var(--yellow);
 }
-nav .navbar-brand .blue {
-    color: var(--blue);
-}
-nav .navbar-brand .red {
-    color: var(--red);
-}
-nav .navbar-brand .yellow {
-    color: var(--yellow);
-}
-nav .navbar-brand .green {
-    color: var(--green);
-}
 
 /* Table Styling */
 table {
@@ -126,8 +114,8 @@ td {
     box-shadow: 0 0 10px var(--shadow-color);
     padding: 10px;
     text-align: center;
-    min-height: 350px; /* Ensure all products have the same height */
-    max-width: 300px;  /* Optional: set max width to control card size */
+    min-height: 350px; 
+    max-width: 300px;  
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -142,7 +130,7 @@ td {
 /* Product Image Styling */
 .product-image {
     margin-bottom: 10px;
-    height: 180px; /* Consistent height for images */
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,18 +150,18 @@ td {
 
 .product-details h3 {
     font-size: 1.1em;
-    min-height: 45px; /* Ensures consistent title area */
+    min-height: 45px;
 }
 
 /* Product Actions */
 .product-actions {
     display: flex;
-    flex-direction: column; /* Stack inputs and buttons vertically */
+    flex-direction: column; 
     gap: 10px;
 }
 
 .product input[type="number"] {
-    width: 50px; /* Consistent width for quantity input */
+    width: 50px; 
     text-align: center;
     padding: 5px;
     margin: 0 auto;
@@ -193,34 +181,7 @@ td {
     background-color: var(--green);
 }
 
-
-/* Responsive Design for Smartphones */
-@media (max-width: 768px) {
-    nav .navbar-brand {
-        font-size: large;
-    }
-    table {
-        width: 95%;
-    }
-    th, td {
-        padding: 10px;
-    }
-    .product {
-        padding: 10px;
-        min-height: auto;
-    }
-    .product img {
-        height: 100px;
-    }
-    .product-actions {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .product input[type="number"] {
-        width: 50px;
-    }
-}
-
+/* Toast Notifications */
 .toast-notification {
     visibility: hidden;
     min-width: 250px;
@@ -244,107 +205,7 @@ td {
     opacity: 1;
 }
 
-.container {
-    max-width: 1200px; /* Set a maximum width */
-    margin: 0 auto; /* Center horizontally */
-    padding: 0 15px;
-}
-
-.hero-section {
-    background-color: #171d2b; /* Dark background to contrast logo and text */
-    padding: 50px 0;
-}
-
-.hero-container {
-    max-width: 1200px;
-    margin: 0 auto; /* Horizontally center the container */
-    display: flex;
-    align-items: center; /* Vertically center both logo and content */
-    justify-content: center; /* Optional: Adjusts horizontal space to center container */
-    gap: 50px; /* Space between logo and content */
-    min-height: 300px; /* Adds height for breathing space */
-    padding: 20px;
-}
-
-.hero-logo {
-    flex: 0 0 auto; /* Prevent logo from stretching */
-    max-width: 200px; /* Adjust the size of the logo */
-}
-
-.hero-logo img {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-}
-
-.hero-content {
-    color: #ffffff;
-    flex: 1; /* Allow content to grow if necessary */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Vertically center the text content */
-    text-align: left;
-}
-
-.hero-content h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #ffffff; /* Bright white for better contrast */
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Optional text shadow to make it stand out */
-}
-
-.hero-content p {
-    font-size: 1.25rem;
-    margin-bottom: 20px;
-    color: #dddddd; /* Slightly lighter to create subtle contrast with the heading */
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-}
-
-.hero-buttons .btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    text-align: center;
-}
-
-.testimonials {
-    max-width: 800px; /* Set maximum width for the whole testimonial section */
-    margin: 0 auto; /* Center the testimonial section */
-    padding: 20px; /* Padding for better aesthetics */
-    box-sizing: border-box; /* Ensure padding doesn't affect the width */
-}
-
-.carousel-inner {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding: 20px 0; /* Add padding to create spacing around the testimonials */
-}
-
-
-.blockquote {
-    margin: 0 auto;
-    max-width: 600px; /* Limit the blockquote width */
-    font-size: 1.1rem;
-    line-height: 1.6;
-    padding: 15px;
-    box-sizing: border-box; 
-}
-
-.blockquote-footer {
-    margin-top: 10px;
-    font-size: 0.9rem;
-}
-
-/* Adjusting the carousel navigation buttons */
-.carousel-control-prev,
-.carousel-control-next {
-    filter: brightness(1.5); /* Lighten the arrows for better visibility */
-}
-
+/* Autocomplete */
 .autocomplete-items {
     position: absolute;
     top: 100%;
@@ -369,4 +230,127 @@ td {
 
 .autocomplete-active {
     background-color: #e9e9e9;
+}
+
+.container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav .navbar-brand { font-size: large; }
+    table { width: 95%; }
+    th, td { padding: 10px; }
+
+    .product {
+        padding: 10px;
+        min-height: auto;
+    }
+
+    .product img { height: 100px; }
+
+    .product-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* Hero Styling */
+.hero-section {
+    background-color: #171d2b; 
+    padding: 50px 0;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 50px; 
+    min-height: 300px; 
+    padding: 20px;
+}
+
+.hero-logo {
+    flex: 0 0 auto; 
+    max-width: 200px; 
+}
+
+.hero-logo img {
+    width: 100%;
+    height: auto; 
+}
+
+.hero-content {
+    color: #ffffff;
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    text-align: left;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffffff; 
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: #dddddd; 
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 10px; 
+}
+
+.hero-buttons .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Testimonials */
+.testimonials {
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+/* Carousel Styling */
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0; 
+}
+
+
+.blockquote {
+    margin: 0 auto;
+    max-width: 600px; 
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 15px;
+    box-sizing: border-box; 
+}
+
+.blockquote-footer {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Adjusting the carousel navigation buttons */
+.carousel-control-prev,
+.carousel-control-next {
+    filter: brightness(1.5); 
 }

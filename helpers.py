@@ -1,25 +1,26 @@
 from dotenv import load_dotenv
 import os
-import csv
+from cs50 import SQL
 import datetime
-import pytz
-import requests
-import subprocess
-import urllib
-import uuid
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
 from flask import redirect, render_template, session
 from functools import wraps
 
+# Load environment variables
 load_dotenv()
 
+# Email configuration
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
+# Database configuration
+DATABASE_URL = os.getenv("DATABASE_URL")
+db = SQL(DATABASE_URL)
+
 
 def apology(message, code=400):
     """Render message as an apology to user."""
@@ -49,10 +50,24 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def get_time():
     # Get the current timestamp as a string
     current_time = datetime.datetime.now()
     return current_time.strftime('%Y-%m-%d %H:%M:%S')
+
+
+def get_cart_count(user_id):
+    """Get the total number of items in a user's cart."""
+    cart_items = db.execute("SELECT SUM(quantity) AS total_items FROM shopping_cart WHERE user_id = ?", user_id)
+    return cart_items[0]["total_items"] if cart_items[0]["total_items"] else 0
+
+
+def get_wishlist_count(user_id):
+    """Get the total number of items in a user's wishlist."""
+    wishlist_items = db.execute("SELECT COUNT(*) AS total_items FROM wishlist WHERE user_id = ?", user_id)
+    return wishlist_items[0]["total_items"] if wishlist_items[0]["total_items"] else 0
+
 
 def send_email(recipient_email, subject, body):
     try:
@@ -76,3 +91,4 @@ def send_email(recipient_email, subject, body):
 
     except Exception as e:
         raise Exception(f"Failed to send email: {e}")
+    

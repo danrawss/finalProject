@@ -1,12 +1,35 @@
 import sqlite3
+from dotenv import load_dotenv
+import os
 
-# Connect to the database (or create it if it doesn't exist)
-connection = sqlite3.connect('techtrove.db')
+# Load environment variables
+load_dotenv()
 
-# Create a cursor object
+# Connect to the database
+DATABASE_URL = os.getenv("DATABASE_URL")
+db_path = DATABASE_URL.replace("sqlite:///", "")
+connection = sqlite3.connect(db_path)
 cursor = connection.cursor()
 
-# Create products table
+# Create tables
+# Users table
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    username TEXT NOT NULL,
+    hash TEXT NOT NULL,
+    cash NUMERIC NOT NULL DEFAULT 10000.00
+)
+''')
+
+
+# Unique index for username
+cursor.execute('''
+CREATE UNIQUE INDEX IF NOT EXISTS username ON users (username)
+''')
+
+
+# Products table
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,22 +41,8 @@ CREATE TABLE IF NOT EXISTS products (
 )
 ''')
 
-# Create users table
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    username TEXT NOT NULL,
-    hash TEXT NOT NULL,
-    cash NUMERIC NOT NULL DEFAULT 10000.00
-)
-''')
 
-# Create unique index for username
-cursor.execute('''
-CREATE UNIQUE INDEX IF NOT EXISTS username ON users (username)
-''')
-
-# Create shopping_cart table
+# Shopping cart table
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS shopping_cart (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +54,20 @@ CREATE TABLE IF NOT EXISTS shopping_cart (
 )
 ''')
 
-# Create purchases table
+
+# Wishlist table
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS wishlist (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+''')
+
+
+# Purchases table
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS purchases (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,18 +80,8 @@ CREATE TABLE IF NOT EXISTS purchases (
 )
 ''')
 
-# Create a wishlist table
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS wishlist (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    product_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-''')
 
-# Add the orders table (if not already added)
+# Orders table 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,7 +103,7 @@ CREATE TABLE IF NOT EXISTS orders (
 ''')
 
 
-# Insert statements for Apple products
+# Insert data for Apple products
 products = [
     ('iPhone 16 Pro', 1099, 'static/images/apple/phones/iphone_16_pro.jpg', 'Phones', 'Apple'),
     ('iPhone 16', 999, 'static/images/apple/phones/iphone_16.jpg', 'Phones', 'Apple'),
@@ -119,7 +131,7 @@ products = [
     ('Apple Watch SE', 249, 'static/images/apple/smartwatches/apple_watch_se.jpg', 'Smartwatches', 'Apple')
 ]
 
-# Insert statements for Samsung products
+# Insert data for Samsung products
 products += [
     ('Galaxy Z Flip5', 999, 'static/images/samsung/phones/samsung_galaxy_z_flip5.avif', 'Phones', 'Samsung'),
     ('Galaxy Z Fold5', 1919, 'static/images/samsung/phones/samsung_galaxy_z_fold5.avif', 'Phones', 'Samsung'),
@@ -147,7 +159,7 @@ products += [
     ('Samsung Galaxy Watch Active 2', 149, 'static/images/samsung/smartwatches/samsung_galaxy_watch_active2.avif', 'Smartwatches', 'Samsung')
 ]
 
-# Insert statements for Xiaomi products
+# Insert data for Xiaomi products
 products += [
     ('Xiaomi Mi 11 Pro', 699, 'static/images/xiaomi/phones/xiaomi_mi_11_pro.webp', 'Phones', 'Xiaomi'),
     ('Xiaomi Mi 11', 599, 'static/images/xiaomi/phones/xiaomi_mi_11.avif', 'Phones', 'Xiaomi'),
