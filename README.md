@@ -62,10 +62,13 @@ To run **TECHTROVE** locally, follow these steps:
    ```bash
    git clone <repository-url>
    cd techtrove
-2. **Install Dependencies**:
+2. **Create the database**:
+   ```bash
+   python db.py
+3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
-3. **Run the Application**:
+4. **Run the Application**:
    ```bash
    flask run
 - Navigate to **http://127.0.0.1:5000** in your browser.
